@@ -3,6 +3,7 @@ package com.doguskar.tasktrackingapplication.requestbody;
 public class PostTaskRequestBody {
     private String title;
     private String description;
+    private Long taskListId;
 
     public String getTitle() {
         return title;
@@ -18,5 +19,13 @@ public class PostTaskRequestBody {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getTaskListId() {
+        return taskListId;
+    }
+
+    public void setTaskListId(Long taskListId) {
+        this.taskListId = taskListId;
     }
 }

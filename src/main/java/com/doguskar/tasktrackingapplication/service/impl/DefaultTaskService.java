@@ -51,6 +51,15 @@ public class DefaultTaskService implements TaskService {
     public boolean update(PostTaskRequestBody postTaskRequestBody, TaskModel taskModel) {
         taskModel.setTitle(postTaskRequestBody.getTitle());
         taskModel.setDescription(postTaskRequestBody.getDescription());
+        if (Objects.nonNull(postTaskRequestBody.getTaskListId())){
+            TaskListModel taskListModel = taskListDao.findById(postTaskRequestBody.getTaskListId());
+            if (Objects.nonNull(taskListModel)){
+                taskModel.setTaskListModel(taskListModel);
+            }
+            else {
+                return false;
+            }
+        }
         return Objects.nonNull(taskDao.update(taskModel));
     }
 
