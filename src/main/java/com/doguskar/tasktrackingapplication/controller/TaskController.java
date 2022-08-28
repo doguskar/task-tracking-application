@@ -38,6 +38,19 @@ public class TaskController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/{taskId}")
+    public ResponseEntity<?> getById(@PathVariable final Long projectId,
+                                   @PathVariable final Long taskListsId,
+                                   @PathVariable final Long taskId) {
+        if (Objects.nonNull(taskId)) {
+            TaskData taskData = taskFacade.findById(projectId, taskListsId, taskId);
+            if (Objects.nonNull(taskData)) {
+                return ResponseEntity.ok(taskData);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PatchMapping("/{taskId}")
     public ResponseEntity<?> patch(@RequestBody final PostTaskRequestBody body,
                                    @PathVariable final Long projectId,

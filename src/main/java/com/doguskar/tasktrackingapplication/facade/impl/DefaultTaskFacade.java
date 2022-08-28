@@ -23,6 +23,15 @@ public class DefaultTaskFacade implements TaskFacade {
     private TaskMapper taskMapper;
 
     @Override
+    public TaskData findById(final Long projectId, final Long taskListsId, final Long taskId) {
+        final TaskModel taskModel = taskService.findTask(projectId, taskListsId, taskId);
+        if (Objects.nonNull(taskModel)){
+            return taskMapper.model2data(taskModel);
+        }
+        return null;
+    }
+
+    @Override
     public TaskData add(final PostTaskRequestBody postTaskRequestBody, final Long projectId, final Long taskListsId) {
         if (Objects.nonNull(projectId) && Objects.nonNull(taskListsId)) {
             final TaskListModel taskListModel = taskListService.findByProjectIdAndTaskListsId(projectId, taskListsId);
@@ -50,15 +59,4 @@ public class DefaultTaskFacade implements TaskFacade {
         return Objects.nonNull(taskModel) && taskService.delete(taskModel);
     }
 
-    /*@Override
-    public TaskData findByProjectIdAndTaskListIdAndTaskId(final Long projectId, final Long taskListsId, final Long taskId) {
-        if (Objects.nonNull(projectId) && Objects.nonNull(taskListsId)
-                && Objects.nonNull(taskId)) {
-            final TaskModel taskModel = taskService.findTask(projectId, taskListsId, taskId);
-            if (Objects.nonNull(taskModel)) {
-                return taskMapper.model2data(taskModel);
-            }
-        }
-        return null;
-    }*/
 }
